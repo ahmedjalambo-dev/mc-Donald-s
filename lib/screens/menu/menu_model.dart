@@ -35,7 +35,7 @@ class MenuModel {
     ),
     MenuModel(
       name: 'Colorful Donuts',
-      numOfFlavours: '6 sets',
+      numOfFlavours: '12 sets',
       imageUrl: AppAssets.colorfulAndTastyDonuts,
     ),
     MenuModel(

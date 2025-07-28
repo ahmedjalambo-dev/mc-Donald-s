@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mc_donalds/constants/app_assets.dart';
 
 class MenuCard extends StatelessWidget {
   final String name;
@@ -22,7 +21,7 @@ class MenuCard extends StatelessWidget {
         // White Card
         Container(
           height: size.height * 0.15,
-          padding: EdgeInsets.only(bottom: size.width * 0.03),
+          padding: EdgeInsets.only(bottom: size.width * 0.08),
           margin: const EdgeInsets.symmetric(vertical: 35),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -39,7 +38,8 @@ class MenuCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Spacer(),
-              // Text and Number of Flavours
+
+              /// Name Title and Number of Flavours
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,25 +54,28 @@ class MenuCard extends StatelessWidget {
                   ),
                 ],
               ),
-
-              // Arrow Icon
-              Align(
-                alignment: AlignmentDirectional.bottomEnd,
-                child: Image.asset(AppAssets.arrorRightCircle, scale: 3),
-              ),
-              SizedBox(width: size.width * 0.03),
+              SizedBox(width: size.width * 0.08),
             ],
           ),
         ),
 
+        /// Arrow Button
+        Positioned(
+          right: size.width * 0.01,
+          bottom: size.width * 0.08,
+          child: IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.arrow_forward, color: Colors.black, size: 24),
+          ),
+        ),
         // Image Above Card
         Positioned(
-          bottom: size.height * 0.04,
+          bottom: size.height * 0.035,
           left: size.width * 0.01,
           child: Image.asset(
             imageUrl,
             height: size.height * 0.20,
-            fit: BoxFit.cover,
+            fit: BoxFit.contain,
           ),
         ),
       ],
