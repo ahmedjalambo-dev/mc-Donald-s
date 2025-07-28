@@ -1,10 +1,9 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mc_donalds/constants/app_assets.dart';
 
 class MenuCard extends StatelessWidget {
   final String name;
-  final int numOfFlavours;
+  final String numOfFlavours;
   final String imageUrl;
 
   const MenuCard({
@@ -24,7 +23,7 @@ class MenuCard extends StatelessWidget {
         Container(
           height: size.height * 0.15,
           padding: EdgeInsets.only(bottom: size.width * 0.03),
-          margin: const EdgeInsets.symmetric(vertical: 40),
+          margin: const EdgeInsets.symmetric(vertical: 30),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(24),
@@ -40,6 +39,7 @@ class MenuCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Spacer(),
+              // Text and Number of Flavours
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,11 +49,12 @@ class MenuCard extends StatelessWidget {
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   Text(
-                    '$numOfFlavours Cups of different flavours',
+                    '$numOfFlavours of different flavours',
                     style: TextStyle(fontSize: 14),
                   ),
                 ],
               ),
+
               // Arrow Icon
               Align(
                 alignment: AlignmentDirectional.bottomEnd,
@@ -66,8 +67,8 @@ class MenuCard extends StatelessWidget {
 
         // Image Above Card
         Positioned(
-          bottom: 50,
-          left: 10,
+          bottom: size.height * 0.03,
+          left: size.width * 0.01,
           child: Image.asset(
             imageUrl,
             height: size.height * 0.20,
