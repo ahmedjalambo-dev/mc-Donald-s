@@ -23,7 +23,7 @@ class MenuCard extends StatelessWidget {
         Container(
           height: size.height * 0.15,
           padding: EdgeInsets.only(bottom: size.width * 0.03),
-          margin: const EdgeInsets.symmetric(vertical: 30),
+          margin: const EdgeInsets.symmetric(vertical: 35),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(24),
@@ -67,7 +67,7 @@ class MenuCard extends StatelessWidget {
 
         // Image Above Card
         Positioned(
-          bottom: size.height * 0.03,
+          bottom: size.height * 0.04,
           left: size.width * 0.01,
           child: Image.asset(
             imageUrl,

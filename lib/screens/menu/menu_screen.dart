@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mc_donalds/constants/app_assets.dart';
 import 'package:mc_donalds/screens/menu/menu_card.dart';
 import 'package:mc_donalds/screens/menu/menu_model.dart';
 
@@ -26,7 +27,7 @@ class _MenuScreenState extends State<MenuScreen> {
             margin: EdgeInsetsDirectional.only(end: 8),
             child: IconButton(
               onPressed: () {},
-              icon: Image.asset('assets/images/icons/bag.png'),
+              icon: Image.asset(AppAssets.bag),
             ),
           ),
         ],
