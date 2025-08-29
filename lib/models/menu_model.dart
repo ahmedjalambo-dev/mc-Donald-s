@@ -21,12 +21,12 @@ class MenuModel {
     MenuModel(
       name: 'Coffee Drinks',
       numOfFlavours: '5 cups',
-      imageUrl: AppAssets.coffeeDrinks,
+      imageUrl: AppAssets.coffeeDrink,
     ),
     MenuModel(
       name: 'Chocolate Drinks',
       numOfFlavours: '3 cups',
-      imageUrl: AppAssets.chocolateDrinks,
+      imageUrl: AppAssets.chocolateDrink,
     ),
     MenuModel(
       name: 'Milkshake',
