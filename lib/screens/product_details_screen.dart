@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mc_donalds/models/product_details_model.dart';
+import 'package:mc_donalds/widgets/product_image_widget.dart';
+import 'package:mc_donalds/widgets/quantity_widget.dart';
 import 'package:mc_donalds/widgets/shadow_widget.dart';
+import 'package:mc_donalds/widgets/toggle_widget.dart';
 
 class ProdcutDetailsScreen extends StatefulWidget {
   final List<ProductDetailsModel> productDetailsModel;
@@ -14,10 +18,9 @@ class ProdcutDetailsScreen extends StatefulWidget {
 class _ProdcutDetailsScreenState extends State<ProdcutDetailsScreen> {
   final PageController _controller = PageController(viewportFraction: 0.50);
   double _currentPage = 0;
-  int selectedIndex = 0;
-  int? selectedSize;
-  bool isSelectedSize = false;
+  int selectedPageIndex = 0;
   double drinkSize = 1.1;
+  int selectedSizeIndex = 0;
 
   @override
   void initState() {
@@ -25,7 +28,7 @@ class _ProdcutDetailsScreenState extends State<ProdcutDetailsScreen> {
     _controller.addListener(() {
       setState(() {
         _currentPage = _controller.page ?? 1;
-        selectedIndex = _currentPage.round();
+        selectedPageIndex = _currentPage.round();
       });
     });
   }
@@ -37,7 +40,9 @@ class _ProdcutDetailsScreenState extends State<ProdcutDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> priceParts = widget.productDetailsModel[selectedIndex].price
+    List<String> priceParts = widget
+        .productDetailsModel[selectedPageIndex]
+        .price
         .toStringAsFixed(2)
         .split('.');
 
@@ -70,13 +75,13 @@ class _ProdcutDetailsScreenState extends State<ProdcutDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.productDetailsModel[selectedIndex].flavour,
+                      widget.productDetailsModel[selectedPageIndex].flavour,
                       style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(widget.productDetailsModel[selectedIndex].title),
+                    Text(widget.productDetailsModel[selectedPageIndex].title),
                   ],
                 ),
                 Row(
@@ -116,28 +121,91 @@ class _ProdcutDetailsScreenState extends State<ProdcutDetailsScreen> {
                 offset: Offset(translateY, 0),
                 child: Transform.scale(
                   scale: scale.clamp(0.5, 1.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Stack(
-                        children: [
-                          ShadowWidget(),
-                          SizedBox(
-                            child: Image.asset(
-                              widget.productDetailsModel[index].image,
-                            ),
+                  child: Padding(
+                    padding: EdgeInsetsGeometry.only(top: 24),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: MediaQuery.sizeOf(context).height * 0.5,
+                          child: Stack(
+                            children: [
+                              ShadowWidget(),
+                              ProductImageWidget(
+                                productDetailsModel: widget.productDetailsModel,
+                                index: index,
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               );
             },
           ),
 
-          ///
+          /// Details Order
+          Positioned(
+            bottom: 100,
+            left: 20,
+            right: 20,
+            child: Column(
+              spacing: 18,
+              children: [
+                /// Size
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: List.generate(
+                    3,
+                    (index) => GestureDetector(
+                      onTap: () => setState(() => selectedSizeIndex = index),
+                      child: Column(
+                        spacing: 8,
+                        children: [
+                          CircleAvatar(
+                            radius: 26,
+                            backgroundColor: selectedSizeIndex == index
+                                ? Color(0xffffd600)
+                                : Color(0xffababab),
+                            child: CircleAvatar(
+                              backgroundColor: selectedSizeIndex == index
+                                  ? Color(0xfffeb30a)
+                                  : Colors.white,
+                              radius: 24.5,
+                              child: SvgPicture.asset(
+                                'assets/images/icons/cup.svg',
+                                color: selectedSizeIndex == index
+                                    ? Colors.white
+                                    : Colors.black,
+                                width: index == 0
+                                    ? 16
+                                    : (index == 1
+                                          ? 18
+                                          : (index == 2 ? 24 : 24)),
+                              ),
+                            ),
+                          ),
+                          Text(
+                            index == 0
+                                ? 'Small'
+                                : (index == 1 ? 'Medium' : 'Large'),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+
+                /// Hot Or Iced
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  spacing: 18,
+                  children: [ToggleWidget(), QuantityWidget()],
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

@@ -17,7 +17,11 @@ class MenuModel {
       numOfFlavours: '6 sets',
       imageUrl: AppAssets.chickenBurger,
     ),
-
+    MenuModel(
+      name: 'Milkshake',
+      numOfFlavours: '5 cups',
+      imageUrl: AppAssets.milkshake,
+    ),
     MenuModel(
       name: 'Coffee Drinks',
       numOfFlavours: '5 cups',
@@ -27,11 +31,6 @@ class MenuModel {
       name: 'Chocolate Drinks',
       numOfFlavours: '3 cups',
       imageUrl: AppAssets.chocolateDrink,
-    ),
-    MenuModel(
-      name: 'Milkshake',
-      numOfFlavours: '5 cups',
-      imageUrl: AppAssets.milkshake,
     ),
     MenuModel(
       name: 'Colorful Donuts',

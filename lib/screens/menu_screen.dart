@@ -52,7 +52,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       ? ProdcutDetailsScreen(productDetailsModel: burgers)
                       : (index == 1
                             ? ProdcutDetailsScreen(
-                                productDetailsModel: coffeDrinks,
+                                productDetailsModel: milkshakeDrinks,
                               )
                             : (index == 2
                                   ? ProdcutDetailsScreen(
