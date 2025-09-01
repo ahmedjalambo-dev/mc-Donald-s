@@ -6,17 +6,10 @@ class ShadowWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 40,
-      right: 50,
-      left: 50,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(50),
-          boxShadow: [
-            BoxShadow(blurRadius: 50, spreadRadius: 30, color: Colors.black54),
-          ],
-        ),
-      ),
+      bottom: 0,
+      right: 0,
+      left: 0,
+      child: Image.asset('assets/images/shadow.png', fit: BoxFit.contain),
     );
   }
 }
