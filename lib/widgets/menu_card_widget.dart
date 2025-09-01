@@ -22,7 +22,12 @@ class MenuCardWidget extends StatelessWidget {
       clipBehavior: Clip.none,
       children: [
         // White Card
-        CardWidget(size: size, name: name, numOfFlavours: numOfFlavours),
+        CardWidget(
+          size: size,
+          name: name,
+          numOfFlavours: numOfFlavours,
+          onTap: onPressed,
+        ),
 
         /// Arrow Button
         Positioned(
