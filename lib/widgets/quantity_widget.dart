@@ -20,8 +20,7 @@ class _QuantityWidgetState extends State<QuantityWidget> {
           borderRadius: BorderRadius.circular(50),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
               onPressed: () => setState(() => quantityNumber++),
@@ -30,13 +29,11 @@ class _QuantityWidgetState extends State<QuantityWidget> {
             CircleAvatar(
               backgroundColor: quantityNumber > 0
                   ? Color(0xfffeb30a)
-                  : Colors.white,
+                  : Colors.transparent,
               radius: 30,
               child: Text(
                 quantityNumber.toString(),
-                style: TextStyle(
-                  color: quantityNumber > 0 ? Colors.white : Colors.black,
-                ),
+                style: TextStyle(fontSize: 18, color: Colors.black),
               ),
             ),
             IconButton(

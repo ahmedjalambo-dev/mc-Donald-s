@@ -1,21 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mc_donalds/models/product_details_model.dart';
+import 'package:mc_donalds/models/product_model.dart';
+import 'package:mc_donalds/widgets/customize_button_widget.dart';
 import 'package:mc_donalds/widgets/product_image_widget.dart';
 import 'package:mc_donalds/widgets/quantity_widget.dart';
 import 'package:mc_donalds/widgets/shadow_widget.dart';
 import 'package:mc_donalds/widgets/toggle_widget.dart';
 
-class ProdcutDetailsScreen extends StatefulWidget {
-  final List<ProductDetailsModel> productDetailsModel;
-  const ProdcutDetailsScreen({super.key, required this.productDetailsModel});
+class ProdcutScreen extends StatefulWidget {
+  final List<ProductModel> productModel;
+  const ProdcutScreen({super.key, required this.productModel});
 
   @override
-  State<ProdcutDetailsScreen> createState() => _ProdcutDetailsScreenState();
+  State<ProdcutScreen> createState() => _ProdcutScreenState();
 }
 
-class _ProdcutDetailsScreenState extends State<ProdcutDetailsScreen> {
+class _ProdcutScreenState extends State<ProdcutScreen> {
   final PageController _controller = PageController(viewportFraction: 0.50);
   double _currentPage = 0;
   int selectedPageIndex = 0;
@@ -40,9 +41,7 @@ class _ProdcutDetailsScreenState extends State<ProdcutDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> priceParts = widget
-        .productDetailsModel[selectedPageIndex]
-        .price
+    List<String> priceParts = widget.productModel[selectedPageIndex].price
         .toStringAsFixed(2)
         .split('.');
 
@@ -75,13 +74,13 @@ class _ProdcutDetailsScreenState extends State<ProdcutDetailsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.productDetailsModel[selectedPageIndex].flavour,
+                      widget.productModel[selectedPageIndex].flavour,
                       style: const TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text(widget.productDetailsModel[selectedPageIndex].title),
+                    Text(widget.productModel[selectedPageIndex].title),
                   ],
                 ),
                 Row(
@@ -112,7 +111,7 @@ class _ProdcutDetailsScreenState extends State<ProdcutDetailsScreen> {
           /// product iamge
           PageView.builder(
             controller: _controller,
-            itemCount: widget.productDetailsModel.length,
+            itemCount: widget.productModel.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               final scale = drinkSize - (_currentPage - index).abs() * 1;
@@ -131,7 +130,7 @@ class _ProdcutDetailsScreenState extends State<ProdcutDetailsScreen> {
                             children: [
                               ShadowWidget(),
                               ProductImageWidget(
-                                productDetailsModel: widget.productDetailsModel,
+                                productDetailsModel: widget.productModel,
                                 index: index,
                               ),
                             ],
@@ -164,7 +163,7 @@ class _ProdcutDetailsScreenState extends State<ProdcutDetailsScreen> {
                         spacing: 8,
                         children: [
                           CircleAvatar(
-                            radius: 26,
+                            radius: 25,
                             backgroundColor: selectedSizeIndex == index
                                 ? Color(0xffffd600)
                                 : Color(0xffababab),
@@ -172,17 +171,21 @@ class _ProdcutDetailsScreenState extends State<ProdcutDetailsScreen> {
                               backgroundColor: selectedSizeIndex == index
                                   ? Color(0xfffeb30a)
                                   : Colors.white,
-                              radius: 24.5,
+                              radius: 23.5,
                               child: SvgPicture.asset(
-                                'assets/images/icons/cup.svg',
-                                color: selectedSizeIndex == index
-                                    ? Colors.white
-                                    : Colors.black,
+                                widget.productModel[0].title == 'Milkshake'
+                                    ? 'assets/images/icons/cup.svg'
+                                    : 'assets/images/icons/burger.svg',
+
+                                colorFilter: ColorFilter.mode(
+                                  Colors.black,
+                                  BlendMode.srcIn,
+                                ),
                                 width: index == 0
-                                    ? 16
+                                    ? 22
                                     : (index == 1
-                                          ? 18
-                                          : (index == 2 ? 24 : 24)),
+                                          ? 24
+                                          : (index == 2 ? 30 : 30)),
                               ),
                             ),
                           ),
@@ -201,7 +204,17 @@ class _ProdcutDetailsScreenState extends State<ProdcutDetailsScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   spacing: 18,
-                  children: [ToggleWidget(), QuantityWidget()],
+                  children: [
+                    Visibility(
+                      visible: widget.productModel[0].title == 'Milkshake',
+                      child: ToggleWidget(),
+                    ),
+                    Visibility(
+                      visible: !(widget.productModel[0].title == 'Milkshake'),
+                      child: CustomizeButtonWidget(),
+                    ),
+                    QuantityWidget(),
+                  ],
                 ),
               ],
             ),

@@ -23,15 +23,16 @@ class MenuModel {
       imageUrl: AppAssets.milkshake,
     ),
     MenuModel(
-      name: 'Coffee Drinks',
-      numOfFlavours: '5 cups',
-      imageUrl: AppAssets.coffeeDrink,
-    ),
-    MenuModel(
       name: 'Chocolate Drinks',
       numOfFlavours: '3 cups',
       imageUrl: AppAssets.chocolateDrink,
     ),
+
+    // MenuModel(
+    //   name: 'Coffee Drinks',
+    //   numOfFlavours: '5 cups',
+    //   imageUrl: AppAssets.coffeeDrink,
+    // ),
     MenuModel(
       name: 'Colorful Donuts',
       numOfFlavours: '12 sets',

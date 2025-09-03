@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mc_donalds/models/product_details_model.dart';
+import 'package:mc_donalds/models/product_model.dart';
 
 class ProductImageWidget extends StatelessWidget {
   const ProductImageWidget({
@@ -8,7 +8,7 @@ class ProductImageWidget extends StatelessWidget {
     required this.index,
   });
 
-  final List<ProductDetailsModel> productDetailsModel;
+  final List<ProductModel> productDetailsModel;
   final int index;
 
   @override
