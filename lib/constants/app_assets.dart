@@ -2,15 +2,18 @@ class AppAssets {
   // Prevent instantiation
   AppAssets._();
 
+  static const String coffeeDrinks = 'assets/images/coffee-drinks/';
+  static const String chocolateDrinks = 'assets/images/chocolate-drinks/';
+  static const String milkshakeDrinks = 'assets/images/milkshake-drinks/';
+  static const String burgers = 'assets/images/burgers/';
   // icons
   static const String bag = 'assets/images/icons/bag.png';
   static const String arrorRightCircle =
       'assets/images/icons/arrow-right-circle.png';
   // Menu Images
   static const String chickenBurger = 'assets/images/menu/ChickenBurger.png';
-  static const String chocolateDrinks =
-      'assets/images/menu/ChocolateDrinks.png';
-  static const String coffeeDrinks = 'assets/images/menu/CoffeeDrinks.png';
+  static const String chocolateDrink = 'assets/images/menu/ChocolateDrinks.png';
+  static const String coffeeDrink = 'assets/images/menu/CoffeeDrinks.png';
   static const String milkshake = 'assets/images/menu/Milkshake.png';
   static const String pileOfWholegra = 'assets/images/menu/PileOfWholegra.png';
   static const String colorfulAndTastyDonuts =

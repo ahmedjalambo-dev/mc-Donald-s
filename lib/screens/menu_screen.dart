@@ -1,7 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mc_donalds/constants/app_assets.dart';
-import 'package:mc_donalds/screens/menu/menu_card.dart';
-import 'package:mc_donalds/screens/menu/menu_model.dart';
+import 'package:mc_donalds/models/product_model.dart';
+import 'package:mc_donalds/screens/product_screen.dart';
+import 'package:mc_donalds/widgets/menu_card_widget.dart';
+import 'package:mc_donalds/models/menu_model.dart';
+import 'package:mc_donalds/screens/soon_screen.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -18,16 +21,13 @@ class _MenuScreenState extends State<MenuScreen> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
-        title: Text(
-          'Menu',
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 32),
-        ),
+        title: Text('MENU', style: TextStyle(fontWeight: FontWeight.w600)),
         actions: [
           Container(
             margin: EdgeInsetsDirectional.only(end: 8),
             child: IconButton(
               onPressed: () {},
-              icon: Image.asset(AppAssets.bag),
+              icon: Icon(CupertinoIcons.bag, color: Colors.black, size: 28),
             ),
           ),
         ],
@@ -38,10 +38,20 @@ class _MenuScreenState extends State<MenuScreen> {
           final item = MenuModel.listMenu[index];
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: MenuCard(
+            child: MenuCardWidget(
               name: item.name,
               numOfFlavours: item.numOfFlavours,
               imageUrl: item.imageUrl,
+              onPressed: () => Navigator.push(
+                context,
+                CupertinoPageRoute(
+                  builder: (context) => index == 0
+                      ? ProdcutScreen(productModel: burgers)
+                      : (index == 1
+                            ? ProdcutScreen(productModel: milkshakeDrinks)
+                            : SoonScreen()),
+                ),
+              ),
             ),
           );
         },

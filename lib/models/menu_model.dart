@@ -17,25 +17,25 @@ class MenuModel {
       numOfFlavours: '6 sets',
       imageUrl: AppAssets.chickenBurger,
     ),
-
-    MenuModel(
-      name: 'Coffee Drinks',
-      numOfFlavours: '5 cups',
-      imageUrl: AppAssets.coffeeDrinks,
-    ),
-    MenuModel(
-      name: 'Chocolate Drinks',
-      numOfFlavours: '3 cups',
-      imageUrl: AppAssets.chocolateDrinks,
-    ),
     MenuModel(
       name: 'Milkshake',
       numOfFlavours: '5 cups',
       imageUrl: AppAssets.milkshake,
     ),
     MenuModel(
+      name: 'Chocolate Drinks',
+      numOfFlavours: '3 cups',
+      imageUrl: AppAssets.chocolateDrink,
+    ),
+
+    // MenuModel(
+    //   name: 'Coffee Drinks',
+    //   numOfFlavours: '5 cups',
+    //   imageUrl: AppAssets.coffeeDrink,
+    // ),
+    MenuModel(
       name: 'Colorful Donuts',
-      numOfFlavours: '6 sets',
+      numOfFlavours: '12 sets',
       imageUrl: AppAssets.colorfulAndTastyDonuts,
     ),
     MenuModel(
