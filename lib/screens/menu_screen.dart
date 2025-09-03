@@ -26,7 +26,9 @@ class _MenuScreenState extends State<MenuScreen> {
           Container(
             margin: EdgeInsetsDirectional.only(end: 8),
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                // TODO: go to cart screen later
+              },
               icon: Icon(CupertinoIcons.bag, color: Colors.black, size: 28),
             ),
           ),
