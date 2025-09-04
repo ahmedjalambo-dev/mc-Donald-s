@@ -2,11 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:mc_donalds/models/product_model.dart';
+import 'package:mc_donalds/providers/cart_provider.dart';
+import 'package:mc_donalds/screens/cart_screen.dart';
 import 'package:mc_donalds/widgets/customize_button_widget.dart';
 import 'package:mc_donalds/widgets/product_image_widget.dart';
 import 'package:mc_donalds/widgets/quantity_widget.dart';
 import 'package:mc_donalds/widgets/shadow_widget.dart';
 import 'package:mc_donalds/widgets/toggle_widget.dart';
+import 'package:provider/provider.dart';
 
 class ProdcutScreen extends StatefulWidget {
   final List<ProductModel> productModel;
@@ -22,6 +25,7 @@ class _ProdcutScreenState extends State<ProdcutScreen> {
   int selectedPageIndex = 0;
   double drinkSize = 1.1;
   int selectedSizeIndex = 0;
+  int _currentQuantity = 1; // Add state for quantity
 
   @override
   void initState() {
@@ -36,6 +40,7 @@ class _ProdcutScreenState extends State<ProdcutScreen> {
 
   @override
   void dispose() {
+    _controller.dispose(); // Dispose the controller
     super.dispose();
   }
 
@@ -51,13 +56,27 @@ class _ProdcutScreenState extends State<ProdcutScreen> {
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
         actions: [
-          Container(
-            margin: EdgeInsetsDirectional.only(end: 8),
+          Consumer<CartProvider>(
+            builder: (_, cart, ch) => Badge(
+              label: Text(cart.itemCount.toString()),
+              isLabelVisible: cart.itemCount > 0,
+              child: ch,
+            ),
             child: IconButton(
-              onPressed: () {},
-              icon: Icon(CupertinoIcons.bag, color: Colors.black, size: 28),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (ctx) => const CartScreen()),
+                );
+              },
+              icon: const Icon(
+                CupertinoIcons.bag,
+                color: Colors.black,
+                size: 28,
+              ),
             ),
           ),
+          const SizedBox(width: 8),
         ],
       ),
       body: Stack(
@@ -90,14 +109,14 @@ class _ProdcutScreenState extends State<ProdcutScreen> {
                   children: [
                     Text(
                       '£${priceParts[0]}.',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 32,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Text(
                       priceParts[1],
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ),
@@ -121,14 +140,14 @@ class _ProdcutScreenState extends State<ProdcutScreen> {
                 child: Transform.scale(
                   scale: scale.clamp(0.5, 1.0),
                   child: Padding(
-                    padding: EdgeInsetsGeometry.only(top: 24),
+                    padding: const EdgeInsets.only(top: 24),
                     child: Column(
                       children: [
                         SizedBox(
-                          height: MediaQuery.sizeOf(context).height * 0.5,
+                          height: MediaQuery.of(context).size.height * 0.5,
                           child: Stack(
                             children: [
-                              ShadowWidget(),
+                              const ShadowWidget(),
                               ProductImageWidget(
                                 productDetailsModel: widget.productModel,
                                 index: index,
@@ -146,11 +165,10 @@ class _ProdcutScreenState extends State<ProdcutScreen> {
 
           /// Details Order
           Positioned(
-            bottom: 100,
+            bottom: 80, // Adjusted bottom position
             left: 20,
             right: 20,
             child: Column(
-              spacing: 18,
               children: [
                 /// Size
                 Row(
@@ -160,24 +178,22 @@ class _ProdcutScreenState extends State<ProdcutScreen> {
                     (index) => GestureDetector(
                       onTap: () => setState(() => selectedSizeIndex = index),
                       child: Column(
-                        spacing: 8,
                         children: [
                           CircleAvatar(
                             radius: 25,
                             backgroundColor: selectedSizeIndex == index
-                                ? Color(0xffffd600)
-                                : Color(0xffababab),
+                                ? const Color(0xffffd600)
+                                : const Color(0xffababab),
                             child: CircleAvatar(
                               backgroundColor: selectedSizeIndex == index
-                                  ? Color(0xfffeb30a)
+                                  ? const Color(0xfffeb30a)
                                   : Colors.white,
                               radius: 23.5,
                               child: SvgPicture.asset(
                                 widget.productModel[0].title == 'Milkshake'
                                     ? 'assets/images/icons/cup.svg'
                                     : 'assets/images/icons/burger.svg',
-
-                                colorFilter: ColorFilter.mode(
+                                colorFilter: const ColorFilter.mode(
                                   Colors.black,
                                   BlendMode.srcIn,
                                 ),
@@ -189,6 +205,7 @@ class _ProdcutScreenState extends State<ProdcutScreen> {
                               ),
                             ),
                           ),
+                          const SizedBox(height: 8),
                           Text(
                             index == 0
                                 ? 'Small'
@@ -199,24 +216,63 @@ class _ProdcutScreenState extends State<ProdcutScreen> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 18),
 
                 /// Hot Or Iced
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  spacing: 18,
                   children: [
                     Visibility(
                       visible: widget.productModel[0].title == 'Milkshake',
-                      child: ToggleWidget(),
+                      child: const ToggleWidget(),
                     ),
                     Visibility(
                       visible: !(widget.productModel[0].title == 'Milkshake'),
-                      child: CustomizeButtonWidget(),
+                      child: const CustomizeButtonWidget(),
                     ),
-                    QuantityWidget(),
+                    const SizedBox(width: 18),
+                    QuantityWidget(
+                      onQuantityChanged: (newQuantity) {
+                        setState(() {
+                          _currentQuantity = newQuantity;
+                        });
+                      },
+                    ),
                   ],
                 ),
               ],
+            ),
+          ),
+
+          // Add to Order Button
+          Positioned(
+            bottom: 10,
+            left: 20,
+            right: 20,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xfffeb30a),
+                minimumSize: const Size(double.infinity, 55),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50),
+                ),
+              ),
+              onPressed: () {
+                final cart = Provider.of<CartProvider>(context, listen: false);
+                final productToAdd = widget.productModel[selectedPageIndex];
+                cart.addItem(productToAdd, _currentQuantity);
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('${productToAdd.flavour} added to cart!'),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              },
+              child: const Text(
+                'Add to Order',
+                style: TextStyle(fontSize: 18, color: Colors.black),
+              ),
             ),
           ),
         ],

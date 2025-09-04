@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class QuantityWidget extends StatefulWidget {
-  const QuantityWidget({super.key});
+  final Function(int) onQuantityChanged;
+  const QuantityWidget({super.key, required this.onQuantityChanged});
 
   @override
   State<QuantityWidget> createState() => _QuantityWidgetState();
@@ -9,38 +10,46 @@ class QuantityWidget extends StatefulWidget {
 
 class _QuantityWidgetState extends State<QuantityWidget> {
   int quantityNumber = 1;
+
+  void _updateQuantity(int newQuantity) {
+    if (newQuantity > 0) {
+      setState(() {
+        quantityNumber = newQuantity;
+      });
+      widget.onQuantityChanged(quantityNumber);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
         height: 60,
-        padding: EdgeInsets.symmetric(vertical: 6),
+        padding: const EdgeInsets.symmetric(vertical: 6),
         decoration: BoxDecoration(
-          color: Color(0xffededed),
+          color: const Color(0xffededed),
           borderRadius: BorderRadius.circular(50),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              onPressed: () => setState(() => quantityNumber++),
-              icon: Icon(Icons.add),
+              onPressed: () => _updateQuantity(quantityNumber + 1),
+              icon: const Icon(Icons.add),
             ),
             CircleAvatar(
               backgroundColor: quantityNumber > 0
-                  ? Color(0xfffeb30a)
+                  ? const Color(0xfffeb30a)
                   : Colors.transparent,
               radius: 30,
               child: Text(
                 quantityNumber.toString(),
-                style: TextStyle(fontSize: 18, color: Colors.black),
+                style: const TextStyle(fontSize: 18, color: Colors.black),
               ),
             ),
             IconButton(
-              onPressed: () => setState(
-                () => quantityNumber > 0 ? quantityNumber-- : quantityNumber,
-              ),
-              icon: Icon(Icons.remove),
+              onPressed: () => _updateQuantity(quantityNumber - 1),
+              icon: const Icon(Icons.remove),
             ),
           ],
         ),

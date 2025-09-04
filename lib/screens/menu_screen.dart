@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mc_donalds/models/product_model.dart';
+import 'package:mc_donalds/providers/cart_provider.dart';
+import 'package:mc_donalds/screens/cart_screen.dart';
 import 'package:mc_donalds/screens/product_screen.dart';
 import 'package:mc_donalds/widgets/menu_card_widget.dart';
 import 'package:mc_donalds/models/menu_model.dart';
 import 'package:mc_donalds/screens/soon_screen.dart';
+import 'package:provider/provider.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({super.key});
@@ -21,17 +24,32 @@ class _MenuScreenState extends State<MenuScreen> {
       appBar: AppBar(
         scrolledUnderElevation: 0,
         backgroundColor: Colors.white,
-        title: Text('MENU', style: TextStyle(fontWeight: FontWeight.w600)),
+        title: const Text(
+          'MENU',
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
         actions: [
-          Container(
-            margin: EdgeInsetsDirectional.only(end: 8),
+          Consumer<CartProvider>(
+            builder: (_, cart, ch) => Badge(
+              label: Text(cart.itemCount.toString()),
+              isLabelVisible: cart.itemCount > 0,
+              child: ch,
+            ),
             child: IconButton(
               onPressed: () {
-                // TODO: go to cart screen later
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(builder: (ctx) => const CartScreen()),
+                );
               },
-              icon: Icon(CupertinoIcons.bag, color: Colors.black, size: 28),
+              icon: const Icon(
+                CupertinoIcons.bag,
+                color: Colors.black,
+                size: 28,
+              ),
             ),
           ),
+          const SizedBox(width: 8),
         ],
       ),
       body: ListView.builder(
@@ -51,7 +69,7 @@ class _MenuScreenState extends State<MenuScreen> {
                       ? ProdcutScreen(productModel: burgers)
                       : (index == 1
                             ? ProdcutScreen(productModel: milkshakeDrinks)
-                            : SoonScreen()),
+                            : const SoonScreen()),
                 ),
               ),
             ),
